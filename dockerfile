@@ -46,3 +46,14 @@ COPY package.json .
 COPY package-lock.json .
 RUN npm install
 COPY . .
+FROM node:14
+WORKDIR /app
+
+# Copia primero package.json (siempre debe existir)
+COPY package.json .
+
+# Copia package-lock.json si existe (usa el patrón que no falla si no encuentra)
+COPY package*.json .
+
+RUN npm install
+COPY . .

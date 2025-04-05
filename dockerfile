@@ -39,3 +39,10 @@ COPY . .
 
 # Ejecuta el build
 RUN npm run build
+# Modifica temporalmente tu Dockerfile para copiar archivos individualmente
+FROM node:14
+WORKDIR /app
+COPY package.json .
+COPY package-lock.json .
+RUN npm install
+COPY . .

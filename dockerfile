@@ -24,3 +24,18 @@ COPY package.json package-lock.json ./
 RUN npm install
 COPY . .
 RUN npm run build
+# Especifica explícitamente el contexto de copia
+FROM node:14 as builder
+WORKDIR /app
+
+# Primero copia solo los archivos del package
+COPY package*.json ./  # Nota el uso del patrón package*.json
+
+# Luego instala dependencias
+RUN npm install
+
+# Finalmente copia todo lo demás
+COPY . .
+
+# Ejecuta el build
+RUN npm run build
